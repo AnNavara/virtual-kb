@@ -22,6 +22,51 @@ body {
     scroll-behavior: smooth;
 }
 
-.keyboard {
-    background-color: firebrick;
+body {
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: minmax(2rem, 1fr) [center-start] 72rem [center-end] minmax(2rem, 1fr);
+    grid-template-rows: 10rem auto;
+}
+
+.textarea {
+    grid-column: center-start / center-end;
+    padding-block: 0.5rem;
+    font-size: 2rem;
+    color: #3b3b3b;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.keyboard {    
+    grid-column: center-start / center-end;
+    padding: 0.5rem;
+    margin-top: 2rem;
+    background-color: rgb(250, 248, 246);
+    border-radius: 5px;
+}
+
+.keyboard__line {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 0.5rem;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0.5rem;
+    font-size: 2rem;
+    color: #3b3b3b;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 2px solid rgb(241, 239, 235);
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.active {
+    border-color: rgb(51, 189, 97);
+    background-color: rgb(51, 189, 97);
 }
