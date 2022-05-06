@@ -1,21 +1,25 @@
 const keys = [
     [
         {
-            key: 'Escape',
+            key: 'Backquote',
             rus: {
                 char: 'ё',
+                shiftChar: 'Ё',
             },
             eng: {
                 char: '`',
+                shiftChar: '~',
             },
         },
         {
             key: 'Digit1',
             rus: {
                 char: '1',
+                shiftChar: '!',
             },
             eng: {
                 char: '1',
+                shiftChar: '!',
             },
         },
         {
@@ -119,19 +123,27 @@ const keys = [
         },
         {
             key: 'Backspace',
+            classes: ['special', 'key--wide', 'no-text'],
+            special: true,
+            specialFunc: (context) => { context.removeKey(); },
             rus: {
-                char: '<--',
+                char: '←',
             },
             eng: {
-                char: '<--',
+                char: '←',
             },
         },
     ],
     [
         {
             key: 'Tab',
+            classes: ['special', 'key--wide'],
+            value: 'Tab',
             rus: {
-                char: 'Tab',
+                char: '    ',
+            },
+            eng: {
+                char: '    ',
             },
         },
         {
@@ -208,6 +220,7 @@ const keys = [
         },
         {
             key: 'Backslash',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: '\\',
             },
@@ -216,6 +229,7 @@ const keys = [
     [
         {
             key: 'CapsLock',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: 'CapsLk',
             },
@@ -288,14 +302,20 @@ const keys = [
         },
         {
             key: 'Enter',
+            classes: ['special', 'key--wide'],
+            value: 'Enter',
             rus: {
-                char: 'Enter',
+                char: '\n',
+            },
+            eng: {
+                char: '\n',
             },
         },
     ],
     [
         {
             key: 'ShiftLeft',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: 'Shift',
             },
@@ -362,6 +382,7 @@ const keys = [
         },
         {
             key: 'ShiftRight',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: 'Shift',
             },
@@ -370,38 +391,48 @@ const keys = [
     [
         {
             key: 'ControlLeft',
+            classes: ['special', 'key--wide'],
             rus: {
-                char: 'CTRL',
+                char: 'Ctrl',
             },
         },
         {
             key: 'MetaLeft',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: 'Win',
             },
         },
         {
             key: 'AltLeft',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: 'Alt',
             },
         },
         {
             key: 'Space',
+            classes: ['special', 'key--xwide'],
+            value: '_____',
             rus: {
-                char: '_____',
+                char: ' ',
+            },
+            eng: {
+                char: ' ',
             },
         },
         {
             key: 'AltRight',
+            classes: ['special', 'key--wide'],
             rus: {
                 char: 'Alt',
             },
         },
         {
             key: 'ControlRight',
+            classes: ['special', 'key--wide'],
             rus: {
-                char: 'CTRL',
+                char: 'Ctrl',
             },
         },
     ],

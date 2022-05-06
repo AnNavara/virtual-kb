@@ -1,6 +1,5 @@
+import './styles/style.css';
 import Keyboard from './app';
-// eslint-disable-next-line
-import css from './styles/style.css';
 import keys from './keys/keys';
 
 const DOM_KEYBOARD = document.querySelector('[data-name="keyboard"]');
