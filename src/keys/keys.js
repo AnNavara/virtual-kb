@@ -41,6 +41,7 @@ const keys = [
             },
             eng: {
                 char: '3',
+                shiftChar: '#',
             },
         },
         {
@@ -51,6 +52,7 @@ const keys = [
             },
             eng: {
                 char: '4',
+                shiftChar: '$',
             },
         },
         {
@@ -61,6 +63,7 @@ const keys = [
             },
             eng: {
                 char: '5',
+                shiftChar: '%',
             },
         },
         {
@@ -71,6 +74,7 @@ const keys = [
             },
             eng: {
                 char: '6',
+                shiftChar: '^',
             },
         },
         {
@@ -81,6 +85,7 @@ const keys = [
             },
             eng: {
                 char: '7',
+                shiftChar: '&',
             },
         },
         {
@@ -91,6 +96,7 @@ const keys = [
             },
             eng: {
                 char: '8',
+                shiftChar: '*',
             },
         },
         {
@@ -101,6 +107,7 @@ const keys = [
             },
             eng: {
                 char: '9',
+                shiftChar: '(',
             },
         },
         {
@@ -111,6 +118,7 @@ const keys = [
             },
             eng: {
                 char: '0',
+                shiftChar: ')',
             },
         },
         {
@@ -121,6 +129,7 @@ const keys = [
             },
             eng: {
                 char: '-',
+                shiftChar: '_',
             },
         },
         {
@@ -131,6 +140,7 @@ const keys = [
             },
             eng: {
                 char: '=',
+                shiftChar: '+',
             },
         },
         {
@@ -165,6 +175,11 @@ const keys = [
                 shiftChar: 'Й',
                 capsChar: 'Й',
             },
+            eng: {
+                char: 'q',
+                shiftChar: 'Q',
+                capsChar: 'Q',
+            },
         },
         {
             key: 'KeyW',
@@ -172,6 +187,11 @@ const keys = [
                 char: 'ц',
                 shiftChar: 'Ц',
                 capsChar: 'Ц',
+            },
+            eng: {
+                char: 'w',
+                shiftChar: 'W',
+                capsChar: 'W',
             },
         },
         {
@@ -181,6 +201,11 @@ const keys = [
                 shiftChar: 'У',
                 capsChar: 'У',
             },
+            eng: {
+                char: 'e',
+                shiftChar: 'E',
+                capsChar: 'E',
+            },
         },
         {
             key: 'KeyR',
@@ -188,6 +213,11 @@ const keys = [
                 char: 'к',
                 shiftChar: 'К',
                 capsChar: 'К',
+            },
+            eng: {
+                char: 'r',
+                shiftChar: 'R',
+                capsChar: 'R',
             },
         },
         {
@@ -197,6 +227,11 @@ const keys = [
                 shiftChar: 'Е',
                 capsChar: 'Е',
             },
+            eng: {
+                char: 't',
+                shiftChar: 'T',
+                capsChar: 'T',
+            },
         },
         {
             key: 'KeyY',
@@ -204,6 +239,11 @@ const keys = [
                 char: 'н',
                 shiftChar: 'Н',
                 capsChar: 'Н',
+            },
+            eng: {
+                char: 'y',
+                shiftChar: 'Y',
+                capsChar: 'Y',
             },
         },
         {
@@ -213,6 +253,11 @@ const keys = [
                 shiftChar: 'Г',
                 capsChar: 'Г',
             },
+            eng: {
+                char: 'u',
+                shiftChar: 'U',
+                capsChar: 'U',
+            },
         },
         {
             key: 'KeyI',
@@ -220,6 +265,11 @@ const keys = [
                 char: 'ш',
                 shiftChar: 'Ш',
                 capsChar: 'Ш',
+            },
+            eng: {
+                char: 'i',
+                shiftChar: 'I',
+                capsChar: 'I',
             },
         },
         {
@@ -229,6 +279,11 @@ const keys = [
                 shiftChar: 'Щ',
                 capsChar: 'Щ',
             },
+            eng: {
+                char: 'o',
+                shiftChar: 'O',
+                capsChar: 'O',
+            },
         },
         {
             key: 'KeyP',
@@ -236,6 +291,11 @@ const keys = [
                 char: 'з',
                 shiftChar: 'З',
                 capsChar: 'З',
+            },
+            eng: {
+                char: 'p',
+                shiftChar: 'P',
+                capsChar: 'P',
             },
         },
         {
@@ -245,6 +305,11 @@ const keys = [
                 shiftChar: 'Х',
                 capsChar: 'Х',
             },
+            eng: {
+                char: '[',
+                shiftChar: '{',
+                capsChar: '[',
+            },
         },
         {
             key: 'BracketRight',
@@ -253,12 +318,22 @@ const keys = [
                 shiftChar: 'Ъ',
                 capsChar: 'Ъ',
             },
+            eng: {
+                char: ']',
+                shiftChar: '}',
+                capsChar: ']',
+            },
         },
         {
             key: 'Backslash',
             cssClasses: ['special', 'key--wide'],
             rus: {
                 char: '\\',
+                shiftChar: '/',
+            },
+            eng: {
+                char: '\\',
+                shiftChar: '|',
             },
         },
     ],
@@ -272,6 +347,9 @@ const keys = [
             rus: {
                 char: '',
             },
+            eng: {
+                char: '',
+            },
         },
         {
             key: 'KeyA',
@@ -279,6 +357,11 @@ const keys = [
                 char: 'ф',
                 shiftChar: 'Ф',
                 capsChar: 'Ф',
+            },
+            eng: {
+                char: 'a',
+                shiftChar: 'A',
+                capsChar: 'A',
             },
         },
         {
@@ -288,6 +371,11 @@ const keys = [
                 shiftChar: 'Ы',
                 capsChar: 'Ы',
             },
+            eng: {
+                char: 's',
+                shiftChar: 'S',
+                capsChar: 'S',
+            },
         },
         {
             key: 'KeyD',
@@ -295,6 +383,11 @@ const keys = [
                 char: 'в',
                 shiftChar: 'В',
                 capsChar: 'В',
+            },
+            eng: {
+                char: 'd',
+                shiftChar: 'D',
+                capsChar: 'D',
             },
         },
         {
@@ -304,6 +397,11 @@ const keys = [
                 shiftChar: 'А',
                 capsChar: 'А',
             },
+            eng: {
+                char: 'f',
+                shiftChar: 'F',
+                capsChar: 'F',
+            },
         },
         {
             key: 'KeyG',
@@ -311,6 +409,11 @@ const keys = [
                 char: 'п',
                 shiftChar: 'П',
                 capsChar: 'П',
+            },
+            eng: {
+                char: 'g',
+                shiftChar: 'G',
+                capsChar: 'G',
             },
         },
         {
@@ -320,6 +423,11 @@ const keys = [
                 shiftChar: 'Р',
                 capsChar: 'Р',
             },
+            eng: {
+                char: 'h',
+                shiftChar: 'H',
+                capsChar: 'H',
+            },
         },
         {
             key: 'KeyJ',
@@ -327,6 +435,11 @@ const keys = [
                 char: 'о',
                 shiftChar: 'О',
                 capsChar: 'О',
+            },
+            eng: {
+                char: 'j',
+                shiftChar: 'J',
+                capsChar: 'J',
             },
         },
         {
@@ -336,6 +449,11 @@ const keys = [
                 shiftChar: 'Л',
                 capsChar: 'Л',
             },
+            eng: {
+                char: 'k',
+                shiftChar: 'K',
+                capsChar: 'K',
+            },
         },
         {
             key: 'KeyL',
@@ -343,6 +461,11 @@ const keys = [
                 char: 'д',
                 shiftChar: 'Д',
                 capsChar: 'Д',
+            },
+            eng: {
+                char: 'l',
+                shiftChar: 'L',
+                capsChar: 'L',
             },
         },
         {
@@ -352,6 +475,11 @@ const keys = [
                 shiftChar: 'Ж',
                 capsChar: 'Ж',
             },
+            eng: {
+                char: ';',
+                shiftChar: ':',
+                capsChar: ';',
+            },
         },
         {
             key: 'Quote',
@@ -359,6 +487,11 @@ const keys = [
                 char: 'э',
                 shiftChar: 'Э',
                 capsChar: 'Э',
+            },
+            eng: {
+                char: '\'',
+                shiftChar: '"',
+                capsChar: '\'',
             },
         },
         {
@@ -383,6 +516,9 @@ const keys = [
             rus: {
                 char: 'Shift',
             },
+            eng: {
+                char: 'Shift',
+            },
         },
         {
             key: 'KeyZ',
@@ -390,6 +526,11 @@ const keys = [
                 char: 'я',
                 shiftChar: 'Я',
                 capsChar: 'Я',
+            },
+            eng: {
+                char: 'z',
+                shiftChar: 'Z',
+                capsChar: 'Z',
             },
         },
         {
@@ -399,6 +540,11 @@ const keys = [
                 shiftChar: 'Ч',
                 capsChar: 'Ч',
             },
+            eng: {
+                char: 'x',
+                shiftChar: 'X',
+                capsChar: 'X',
+            },
         },
         {
             key: 'KeyC',
@@ -406,6 +552,11 @@ const keys = [
                 char: 'с',
                 shiftChar: 'С',
                 capsChar: 'С',
+            },
+            eng: {
+                char: 'c',
+                shiftChar: 'C',
+                capsChar: 'C',
             },
         },
         {
@@ -415,6 +566,11 @@ const keys = [
                 shiftChar: 'М',
                 capsChar: 'М',
             },
+            eng: {
+                char: 'v',
+                shiftChar: 'V',
+                capsChar: 'V',
+            },
         },
         {
             key: 'KeyB',
@@ -422,6 +578,11 @@ const keys = [
                 char: 'и',
                 shiftChar: 'И',
                 capsChar: 'И',
+            },
+            eng: {
+                char: 'b',
+                shiftChar: 'B',
+                capsChar: 'B',
             },
         },
         {
@@ -431,6 +592,11 @@ const keys = [
                 shiftChar: 'Т',
                 capsChar: 'Т',
             },
+            eng: {
+                char: 'n',
+                shiftChar: 'N',
+                capsChar: 'N',
+            },
         },
         {
             key: 'KeyM',
@@ -438,6 +604,11 @@ const keys = [
                 char: 'ь',
                 shiftChar: 'Ь',
                 capsChar: 'Ь',
+            },
+            eng: {
+                char: 'm',
+                shiftChar: 'M',
+                capsChar: 'M',
             },
         },
         {
@@ -447,6 +618,11 @@ const keys = [
                 shiftChar: 'Б',
                 capsChar: 'Б',
             },
+            eng: {
+                char: ',',
+                shiftChar: '<',
+                capsChar: ',',
+            },
         },
         {
             key: 'Period',
@@ -455,6 +631,11 @@ const keys = [
                 shiftChar: 'Ю',
                 capsChar: 'Ю',
             },
+            eng: {
+                char: '.',
+                shiftChar: '>',
+                capsChar: '.',
+            },
         },
         {
             key: 'Slash',
@@ -462,6 +643,11 @@ const keys = [
                 char: '.',
                 shiftChar: ',',
                 capsChar: '.',
+            },
+            eng: {
+                char: '/',
+                shiftChar: '?',
+                capsChar: '/',
             },
         },
         {
@@ -473,6 +659,9 @@ const keys = [
             rus: {
                 char: 'Shift',
             },
+            eng: {
+                char: 'Shift',
+            },
         },
     ],
     [
@@ -480,7 +669,13 @@ const keys = [
             key: 'ControlLeft',
             cssClasses: ['special', 'key--wide'],
             value: 'Ctrl',
+            special: true,
+            keyDown: (context) => { context.addCtrl(); },
+            keyUp: (context) => { context.removeCtrl(); },
             rus: {
+                char: '',
+            },
+            eng: {
                 char: '',
             },
         },
@@ -491,12 +686,21 @@ const keys = [
             rus: {
                 char: '',
             },
+            eng: {
+                char: '',
+            },
         },
         {
             key: 'AltLeft',
             cssClasses: ['special', 'key--wide'],
             value: 'Alt',
+            special: true,
+            keyDown: (context) => { context.addAlt(); },
+            keyUp: (context) => { context.removeAlt(); },
             rus: {
+                char: '',
+            },
+            eng: {
                 char: '',
             },
         },
@@ -515,7 +719,13 @@ const keys = [
             key: 'AltRight',
             cssClasses: ['special', 'key--wide'],
             value: 'Alt',
+            special: true,
+            keyDown: (context) => { context.addAlt(); },
+            keyUp: (context) => { context.removeAlt(); },
             rus: {
+                char: '',
+            },
+            eng: {
                 char: '',
             },
         },
@@ -523,7 +733,13 @@ const keys = [
             key: 'ControlRight',
             cssClasses: ['special', 'key--wide'],
             value: 'Ctrl',
+            special: true,
+            keyDown: (context) => { context.addCtrl(); },
+            keyUp: (context) => { context.removeCtrl(); },
             rus: {
+                char: '',
+            },
+            eng: {
                 char: '',
             },
         },

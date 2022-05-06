@@ -5,11 +5,15 @@ export default class Keyboard {
         this.textfield = textfield;
         this.flatkey = null;
         this.lang = 'rus';
+        this.langList = ['rus', 'eng'];
         this.isShift = false;
+        this.isCtrl = false;
+        this.isAlt = false;
         this.isCapsLock = false;
         this.DEFAULT_KEY = 'char';
         this.SHIFT_KEY = 'shiftChar';
         this.CAPS_KEY = 'capsChar';
+        this.counter = 0;
     }
 
     createDom() {
@@ -26,7 +30,6 @@ export default class Keyboard {
                     key.cssClasses.forEach((cssClass) => keycap.classList.add(cssClass));
                 }
                 keycap.dataset.key = key.key;
-                keycap.dataset.rus = key.rus.char;
                 keycap.textContent = key.value ? key.value : key[this.lang].char;
 
                 boardLine.appendChild(keycap);
@@ -51,7 +54,6 @@ export default class Keyboard {
     getSelection() {
         const caret = this.textfield.selectionStart;
         const caretEnd = this.textfield.selectionEnd;
-        console.log(caret, caretEnd);
         return { caret, caretEnd };
     }
 
@@ -150,10 +152,47 @@ export default class Keyboard {
         this.flatkey
             .filter((keycap) => keycap[this.lang][filterKey])
             .forEach((keycap) => {
-                this.container.querySelector(`[data-key=${keycap.key}]`).innerHTML = keycap[this.lang][replaceKey]
+                let replace = keycap[this.lang][replaceKey]
                     ? keycap[this.lang][replaceKey]
                     : keycap[this.lang][this.DEFAULT_KEY];
+                if (keycap.value) replace = keycap.value;
+                this.container.querySelector(`[data-key=${keycap.key}]`).innerHTML = replace;
             });
+    }
+
+    switchLanguage() {
+        this.counter += 1;
+        console.log(this.counter);
+
+        if (this.isAlt && this.isCtrl) {
+            if (this.langList.indexOf(this.lang) + 1 >= this.langList.length) {
+                ([this.lang] = this.langList);
+            } else {
+                this.lang = this.langList[this.langList.indexOf(this.lang) + 1];
+            }
+            console.log('Language is :', this.lang);
+            this.replaceKeycap('char');
+        }
+    }
+
+    addCtrl() {
+        this.isCtrl = true;
+        this.switchLanguage();
+    }
+
+    removeCtrl() {
+        this.isCtrl = false;
+        this.switchLanguage();
+    }
+
+    addAlt() {
+        this.isAlt = true;
+        this.switchLanguage();
+    }
+
+    removeAlt() {
+        this.isAlt = false;
+        this.switchLanguage();
     }
 
     shiftKeycapDown() {
@@ -195,7 +234,7 @@ export default class Keyboard {
             this.highlightKeycap(event.code);
 
             if (keyObj.special) {
-                keyObj.keyDown(this);
+                keyObj.keyDown(this, event.code);
             } else {
                 this.printKey(keyObj);
             }

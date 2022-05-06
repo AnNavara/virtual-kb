@@ -19,13 +19,41 @@ html {
 
 :root {
     scroll-behavior: smooth;
+    --color-theme-light: #3b3b3b;
+    --color-keyboard-theme-light: rgb(245, 244, 243);
+    --color-keycap-theme-light: rgb(245, 244, 243);
+    --color-keycap-border-theme-light: rgb(209 209 209);
+    --color-special-keys-theme-light: rgb(199, 199, 193);
+    --color-active-theme-light: rgb(51, 189, 97);
+    --color-text: var(--color-theme-light);
+    --color-keyboard: var(--color-keyboard-theme-light);
+    --color-keycap: var(--color-keycap-theme-light);
+    --color-keycap-border: var(--color-keycap-border-theme-light);
+    --color-special-keys: var(--color-special-keys-theme-light);
+    --color-active: var(--color-active-theme-light);
 }
 
 body {
-    padding-top: 2rem;
     display: grid;
     grid-template-columns: minmax(2rem, 1fr) [center-start] 72rem [center-end] minmax(2rem, 1fr);
-    grid-template-rows: 18rem auto;
+    grid-template-rows: auto 18rem auto;
+}
+
+.header {
+    grid-column: center-start / center-end;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    margin-block: 2rem;
+    color: var(--color-text);
+    font-size: 4rem;
+}
+
+p {
+    grid-column: center-start / center-end;
+    font-size: 1.3rem;
 }
 
 .textarea {
@@ -41,8 +69,8 @@ body {
     flex-direction: column;
     row-gap: 0.5rem;
     padding: 0.5rem;
-    margin-top: 2rem;
-    background-color: rgb(245, 244, 243);
+    margin-block: 2rem;
+    background-color: var(--keyboard-color);
     border-radius: 5px;
 }
 
@@ -60,10 +88,10 @@ body {
     height: 4rem;
     padding: 0.5rem;
     font-size: 2rem;
-    color: #3b3b3b;
+    color: var(--color-text);
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(250, 250, 249);
-    border: 2px solid rgb(209 209 209);
+    background-color: var(--color-keycap);
+    border: 2px solid var(--color-keycap-border);
     border-radius: 5px;
     transition: all 0.15s ease-in-out;
     user-select: none;
@@ -81,8 +109,8 @@ body {
 .special {
     padding-inline: 1rem;
     font-size: 1.8rem;
-    background-color: rgb(199, 199, 193);
-    border-color: rgb(199, 199, 193);
+    background-color: var(--color-special-keys);
+    border-color: var(--color-special-keys);
 }
 
 .no-text {
@@ -91,6 +119,6 @@ body {
 }
 
 .active {
-    border-color: rgb(51, 189, 97);
-    background-color: rgb(51, 189, 97);
+    border-color: var(--color-active);
+    background-color: var(--color-active);
 }
