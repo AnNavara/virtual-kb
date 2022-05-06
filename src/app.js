@@ -30,12 +30,12 @@ export default class Keyboard {
             board.appendChild(boardLine);
         });
 
+        this.flatkey = this.keys.flat(2);
         this.textfield.innerHTML = '';
         this.container.appendChild(board);
     }
 
     findKey(key) {
-        if (!this.flatkey) this.flatkey = this.keys.flat(2);
         return this.flatkey.filter((e) => e.key === key)[0];
     }
 
@@ -120,12 +120,29 @@ export default class Keyboard {
         }
     }
 
+    shiftKeyDown() {
+        this.flatkey
+            .filter((key) => key.rus.shiftChar)
+            .forEach((key) => {
+                this.container.querySelector(`[data-key=${key.key}]`).innerHTML = key[this.lang].shiftChar;
+            });
+    }
+
+    shiftKeyUp() {
+        this.flatkey
+            .filter((key) => key.rus.shiftChar)
+            .forEach((key) => {
+                this.container.querySelector(`[data-key=${key.key}]`).innerHTML = key[this.lang].char;
+            });
+    }
+
     register() {
         // Split functions and event listeners
         document.addEventListener('keydown', (event) => {
             event.preventDefault();
             console.log(event.code);
             const keyObj = this.findKey(event.code);
+            if (!keyObj) return;
             this.container
                 .querySelector(`[data-key=${event.code}]`)
                 .classList.add('active');
@@ -138,9 +155,16 @@ export default class Keyboard {
         });
 
         document.addEventListener('keyup', (event) => {
+            const keyObj = this.findKey(event.code);
+            if (!keyObj) return;
             this.container
                 .querySelector(`[data-key=${event.code}]`)
                 .classList.remove('active');
+
+            if (keyObj.special) {
+                if (!keyObj.specialFuncUp) return;
+                keyObj.specialFuncUp(this);
+            }
         });
 
         this.container.addEventListener('mousedown', (event) => {
