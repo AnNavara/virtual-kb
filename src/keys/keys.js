@@ -135,9 +135,9 @@ const keys = [
         },
         {
             key: 'Backspace',
-            classes: ['special', 'key--wide', 'no-text'],
+            cssClasses: ['special', 'key--wide', 'no-text'],
             special: true,
-            specialFunc: (context) => { context.removeKey(); },
+            keyDown: (context) => { context.removeKey(); },
             rus: {
                 char: '←',
             },
@@ -149,7 +149,7 @@ const keys = [
     [
         {
             key: 'Tab',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Tab',
             rus: {
                 char: '    ',
@@ -163,6 +163,7 @@ const keys = [
             rus: {
                 char: 'й',
                 shiftChar: 'Й',
+                capsChar: 'Й',
             },
         },
         {
@@ -170,6 +171,7 @@ const keys = [
             rus: {
                 char: 'ц',
                 shiftChar: 'Ц',
+                capsChar: 'Ц',
             },
         },
         {
@@ -177,6 +179,7 @@ const keys = [
             rus: {
                 char: 'у',
                 shiftChar: 'У',
+                capsChar: 'У',
             },
         },
         {
@@ -184,6 +187,7 @@ const keys = [
             rus: {
                 char: 'к',
                 shiftChar: 'К',
+                capsChar: 'К',
             },
         },
         {
@@ -191,6 +195,7 @@ const keys = [
             rus: {
                 char: 'е',
                 shiftChar: 'Е',
+                capsChar: 'Е',
             },
         },
         {
@@ -198,6 +203,7 @@ const keys = [
             rus: {
                 char: 'н',
                 shiftChar: 'Н',
+                capsChar: 'Н',
             },
         },
         {
@@ -205,6 +211,7 @@ const keys = [
             rus: {
                 char: 'г',
                 shiftChar: 'Г',
+                capsChar: 'Г',
             },
         },
         {
@@ -212,6 +219,7 @@ const keys = [
             rus: {
                 char: 'ш',
                 shiftChar: 'Ш',
+                capsChar: 'Ш',
             },
         },
         {
@@ -219,6 +227,7 @@ const keys = [
             rus: {
                 char: 'щ',
                 shiftChar: 'Щ',
+                capsChar: 'Щ',
             },
         },
         {
@@ -226,6 +235,7 @@ const keys = [
             rus: {
                 char: 'з',
                 shiftChar: 'З',
+                capsChar: 'З',
             },
         },
         {
@@ -233,6 +243,7 @@ const keys = [
             rus: {
                 char: 'х',
                 shiftChar: 'Х',
+                capsChar: 'Х',
             },
         },
         {
@@ -240,11 +251,12 @@ const keys = [
             rus: {
                 char: 'ъ',
                 shiftChar: 'Ъ',
+                capsChar: 'Ъ',
             },
         },
         {
             key: 'Backslash',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             rus: {
                 char: '\\',
             },
@@ -253,7 +265,9 @@ const keys = [
     [
         {
             key: 'CapsLock',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
+            special: true,
+            keyDown: (context) => { context.capsLock(); },
             value: 'CapsLk',
             rus: {
                 char: '',
@@ -264,6 +278,7 @@ const keys = [
             rus: {
                 char: 'ф',
                 shiftChar: 'Ф',
+                capsChar: 'Ф',
             },
         },
         {
@@ -271,6 +286,7 @@ const keys = [
             rus: {
                 char: 'ы',
                 shiftChar: 'Ы',
+                capsChar: 'Ы',
             },
         },
         {
@@ -278,6 +294,7 @@ const keys = [
             rus: {
                 char: 'в',
                 shiftChar: 'В',
+                capsChar: 'В',
             },
         },
         {
@@ -285,6 +302,7 @@ const keys = [
             rus: {
                 char: 'а',
                 shiftChar: 'А',
+                capsChar: 'А',
             },
         },
         {
@@ -292,6 +310,7 @@ const keys = [
             rus: {
                 char: 'п',
                 shiftChar: 'П',
+                capsChar: 'П',
             },
         },
         {
@@ -299,6 +318,7 @@ const keys = [
             rus: {
                 char: 'р',
                 shiftChar: 'Р',
+                capsChar: 'Р',
             },
         },
         {
@@ -306,6 +326,7 @@ const keys = [
             rus: {
                 char: 'о',
                 shiftChar: 'О',
+                capsChar: 'О',
             },
         },
         {
@@ -313,6 +334,7 @@ const keys = [
             rus: {
                 char: 'л',
                 shiftChar: 'Л',
+                capsChar: 'Л',
             },
         },
         {
@@ -320,6 +342,7 @@ const keys = [
             rus: {
                 char: 'д',
                 shiftChar: 'Д',
+                capsChar: 'Д',
             },
         },
         {
@@ -327,6 +350,7 @@ const keys = [
             rus: {
                 char: 'ж',
                 shiftChar: 'Ж',
+                capsChar: 'Ж',
             },
         },
         {
@@ -334,11 +358,12 @@ const keys = [
             rus: {
                 char: 'э',
                 shiftChar: 'Э',
+                capsChar: 'Э',
             },
         },
         {
             key: 'Enter',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Enter',
             rus: {
                 char: '\n',
@@ -351,10 +376,10 @@ const keys = [
     [
         {
             key: 'ShiftLeft',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             special: true,
-            specialFunc: (context) => { context.shiftKeyDown(); },
-            specialFuncUp: (context) => { context.shiftKeyUp(); },
+            keyDown: (context) => { context.shiftKeycapDown(); },
+            keyUp: (context) => { context.shiftKeycapUp(); },
             rus: {
                 char: 'Shift',
             },
@@ -364,6 +389,7 @@ const keys = [
             rus: {
                 char: 'я',
                 shiftChar: 'Я',
+                capsChar: 'Я',
             },
         },
         {
@@ -371,6 +397,7 @@ const keys = [
             rus: {
                 char: 'ч',
                 shiftChar: 'Ч',
+                capsChar: 'Ч',
             },
         },
         {
@@ -378,6 +405,7 @@ const keys = [
             rus: {
                 char: 'с',
                 shiftChar: 'С',
+                capsChar: 'С',
             },
         },
         {
@@ -385,6 +413,7 @@ const keys = [
             rus: {
                 char: 'м',
                 shiftChar: 'М',
+                capsChar: 'М',
             },
         },
         {
@@ -392,6 +421,7 @@ const keys = [
             rus: {
                 char: 'и',
                 shiftChar: 'И',
+                capsChar: 'И',
             },
         },
         {
@@ -399,6 +429,7 @@ const keys = [
             rus: {
                 char: 'т',
                 shiftChar: 'Т',
+                capsChar: 'Т',
             },
         },
         {
@@ -406,6 +437,7 @@ const keys = [
             rus: {
                 char: 'ь',
                 shiftChar: 'Ь',
+                capsChar: 'Ь',
             },
         },
         {
@@ -413,6 +445,7 @@ const keys = [
             rus: {
                 char: 'б',
                 shiftChar: 'Б',
+                capsChar: 'Б',
             },
         },
         {
@@ -420,6 +453,7 @@ const keys = [
             rus: {
                 char: 'ю',
                 shiftChar: 'Ю',
+                capsChar: 'Ю',
             },
         },
         {
@@ -427,11 +461,15 @@ const keys = [
             rus: {
                 char: '.',
                 shiftChar: ',',
+                capsChar: '.',
             },
         },
         {
             key: 'ShiftRight',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
+            special: true,
+            keyDown: (context) => { context.shiftKeycapDown(); },
+            keyUp: (context) => { context.shiftKeycapUp(); },
             rus: {
                 char: 'Shift',
             },
@@ -440,7 +478,7 @@ const keys = [
     [
         {
             key: 'ControlLeft',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Ctrl',
             rus: {
                 char: '',
@@ -448,7 +486,7 @@ const keys = [
         },
         {
             key: 'MetaLeft',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Win',
             rus: {
                 char: '',
@@ -456,7 +494,7 @@ const keys = [
         },
         {
             key: 'AltLeft',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Alt',
             rus: {
                 char: '',
@@ -464,7 +502,7 @@ const keys = [
         },
         {
             key: 'Space',
-            classes: ['special', 'key--xwide'],
+            cssClasses: ['special', 'key--xwide'],
             value: '_____',
             rus: {
                 char: ' ',
@@ -475,7 +513,7 @@ const keys = [
         },
         {
             key: 'AltRight',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Alt',
             rus: {
                 char: '',
@@ -483,7 +521,7 @@ const keys = [
         },
         {
             key: 'ControlRight',
-            classes: ['special', 'key--wide'],
+            cssClasses: ['special', 'key--wide'],
             value: 'Ctrl',
             rus: {
                 char: '',
