@@ -651,11 +651,25 @@ const keys = [
             },
         },
         {
+            key: 'ArrowUp',
+            cssClasses: ['special'],
+            value: '🠕',
+            special: true,
+            keyDown: (context) => { context.caretUp(); },
+            rus: {
+                char: '',
+            },
+            eng: {
+                char: '',
+            },
+        },
+        {
             key: 'ShiftRight',
             cssClasses: ['special', 'key--wide'],
             special: true,
             keyDown: (context) => { context.shiftKeycapDown(); },
             keyUp: (context) => { context.shiftKeycapUp(); },
+            value: 'Shift',
             rus: {
                 char: 'Shift',
             },
@@ -722,6 +736,45 @@ const keys = [
             special: true,
             keyDown: (context) => { context.addAlt(); },
             keyUp: (context) => { context.removeAlt(); },
+            rus: {
+                char: '',
+            },
+            eng: {
+                char: '',
+            },
+        },
+        {
+            key: 'ArrowLeft',
+            cssClasses: ['special'],
+            value: '🠔',
+            special: true,
+            keyDown: (context) => { context.caretLeft(); },
+            rus: {
+                char: '',
+            },
+            eng: {
+                char: '',
+            },
+        },
+        {
+            key: 'ArrowDown',
+            cssClasses: ['special'],
+            value: '🠗',
+            special: true,
+            keyDown: (context) => { context.caretDown(); },
+            rus: {
+                char: '',
+            },
+            eng: {
+                char: '',
+            },
+        },
+        {
+            key: 'ArrowRight',
+            cssClasses: ['special'],
+            value: '🠖',
+            special: true,
+            keyDown: (context) => { context.caretRight(); },
             rus: {
                 char: '',
             },

@@ -80,6 +80,7 @@ export default class Keyboard {
         // Textfield is not in focus
         if (!this.isFocus()) {
             this.textfield.innerHTML += letter;
+            this.moveSelectionTo(this.textfield.innerHTML.length, this.textfield.innerHTML.length);
         // Textfield is in focus and only one caret
         } else if (caret === caretEnd) {
             // Caret at end of textfield
@@ -220,6 +221,103 @@ export default class Keyboard {
         this.container
             .querySelector(`[data-key=${code}]`)
             .classList.remove('active');
+    }
+
+    caretLeft() {
+        const { caret } = this.getSelection();
+        if (!this.isFocus()) {
+            this.textfield.focus();
+            this.moveSelectionTo(
+                caret - 1,
+                caret - 1,
+            );
+        } else {
+            if (caret === 0) return;
+            this.moveSelectionTo(
+                caret - 1,
+                caret - 1,
+            );
+        }
+    }
+
+    caretRight() {
+        const { caret } = this.getSelection();
+        if (!this.isFocus()) {
+            this.textfield.focus();
+        }
+        if (caret === this.textfield.innerHTML.length) return;
+        this.moveSelectionTo(
+            caret + 1,
+            caret + 1,
+        );
+    }
+
+    caretDown() {
+        const lines = this.textfield.innerHTML.split('\n');
+        const isMultiline = lines.length > 1;
+        const { caret } = this.getSelection();
+        if (!this.isFocus()) {
+            this.textfield.focus();
+        } else {
+            // Check if caret at the end of textfield
+            if (caret === this.textfield.innerHTML.length) return;
+            // Check if its multiline
+            if (isMultiline) {
+                // Get line position of caret
+                const lengths = lines.map((e) => {
+                    if (e === '') return 1;
+                    return e.length + 1;
+                });
+                lengths[lengths.length - 1] = lengths[lengths.length - 1] - 1;
+                let lineIDX = 1;
+                // eslint-disable-next-line
+                for (let i = 1; i <= lengths.length; i++) {
+                    const sum = lengths.slice(0, i).reduce((p, c) => p + c, 0);
+                    if (caret - sum < 0) {
+                        lineIDX = i;
+                        break;
+                    }
+                }
+                // Dont move Caret if at the last line
+                if (lines.length === lineIDX) return;
+                // Move Caret to the next line
+                const nextLinePos = lengths.slice(0, lineIDX).reduce((p, c) => p + c, 0);
+                this.moveSelectionTo(nextLinePos, nextLinePos);
+            }
+        }
+    }
+
+    caretUp() {
+        const lines = this.textfield.innerHTML.split('\n');
+        const isMultiline = lines.length > 1;
+        const { caret } = this.getSelection();
+        if (!this.isFocus()) {
+            this.textfield.focus();
+        } else {
+            // Check if caret at the start of textfield
+            if (caret === 0) return;
+            // Check if its multiline
+            if (isMultiline) {
+                // Get line position of caret
+                const lengths = lines.map((e) => {
+                    if (e === '') return 1;
+                    return e.length + 1;
+                });
+                lengths[lengths.length - 1] = lengths[lengths.length - 1] - 1;
+                let lineIDX = 1;
+                // eslint-disable-next-line
+                for (let i = 1; i <= lengths.length; i++) {
+                    const sum = lengths.slice(0, i).reduce((p, c) => p + c, 0);
+                    if (caret - sum < 0) {
+                        lineIDX = i;
+                        break;
+                    }
+                }
+                // Move Caret to the previous line
+                const prevLinePos = lengths.slice(0, lineIDX - 2).reduce((p, c) => p + c, 0);
+                this.moveSelectionTo(prevLinePos, prevLinePos);
+            }
+        }
     }
 
     register() {

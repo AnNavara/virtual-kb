@@ -70,7 +70,7 @@ p {
     row-gap: 0.5rem;
     padding: 0.5rem;
     margin-block: 2rem;
-    background-color: var(--keyboard-color);
+    background-color: var(--color-keyboard);
     border-radius: 5px;
 }
 
@@ -102,7 +102,7 @@ p {
 }
 
 .key--xwide {
-    flex: 8;
+    flex: 6;
     padding-bottom: 2rem;
 }
 
