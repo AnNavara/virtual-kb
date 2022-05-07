@@ -1,10 +1,10 @@
 export default class Keyboard {
-    constructor(keys, container, textfield) {
+    constructor(keys, { container, textfield }) {
         this.keys = keys;
+        this.flatkey = null;
         this.container = container;
         this.textfield = textfield;
-        this.flatkey = null;
-        this.lang = 'rus';
+        this.lang = localStorage.getItem('lang') ?? 'rus';
         this.langList = ['rus', 'eng'];
         this.isShift = false;
         this.isCtrl = false;
@@ -13,7 +13,6 @@ export default class Keyboard {
         this.DEFAULT_KEY = 'char';
         this.SHIFT_KEY = 'shiftChar';
         this.CAPS_KEY = 'capsChar';
-        this.counter = 0;
     }
 
     createDom() {
@@ -161,18 +160,16 @@ export default class Keyboard {
     }
 
     switchLanguage() {
-        this.counter += 1;
-        console.log(this.counter);
-
         if (this.isAlt && this.isCtrl) {
             if (this.langList.indexOf(this.lang) + 1 >= this.langList.length) {
                 ([this.lang] = this.langList);
             } else {
                 this.lang = this.langList[this.langList.indexOf(this.lang) + 1];
             }
-            console.log('Language is :', this.lang);
             this.replaceKeycap('char');
         }
+
+        localStorage.setItem('lang', this.lang);
     }
 
     addCtrl() {
