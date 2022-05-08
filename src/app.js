@@ -1,11 +1,11 @@
 export default class Keyboard {
-    constructor(keys, { container, textfield }) {
+    constructor(keys, { container, textfield, languages }) {
         this.keys = keys;
         this.flatkey = null;
         this.container = container;
         this.textfield = textfield;
         this.lang = localStorage.getItem('lang') ?? 'rus';
-        this.langList = ['rus', 'eng'];
+        this.langList = languages ?? ['rus', 'eng'];
         this.isShift = false;
         this.isCtrl = false;
         this.isAlt = false;
@@ -15,7 +15,7 @@ export default class Keyboard {
         this.CAPS_KEY = 'capsChar';
     }
 
-    createDom() {
+    create() {
         const board = new DocumentFragment();
 
         this.keys.forEach((line) => {
@@ -40,6 +40,28 @@ export default class Keyboard {
         this.flatkey = this.keys.flat(2);
         this.textfield.innerHTML = '';
         this.container.appendChild(board);
+
+        this.registerEvent();
+    }
+
+    handleCtrl(active) {
+        this.isCtrl = active ?? false;
+        this.switchLanguage();
+    }
+
+    handleAlt(active) {
+        this.isAlt = active ?? false;
+        this.switchLanguage();
+    }
+
+    handleShift(active) {
+        this.isShift = active ?? false;
+        this.replaceKeycap('shiftChar');
+    }
+
+    handleCapsLock() {
+        this.isCapsLock = !this.isCapsLock;
+        this.replaceKeycap('capsChar');
     }
 
     findKey(key) {
@@ -80,7 +102,7 @@ export default class Keyboard {
         // Textfield is not in focus
         if (!this.isFocus()) {
             this.textfield.innerHTML += letter;
-            this.moveSelectionTo(this.textfield.innerHTML.length, this.textfield.innerHTML.length);
+            this.moveSelectionTo(text.length, text.length);
         // Textfield is in focus and only one caret
         } else if (caret === caretEnd) {
             // Caret at end of textfield
@@ -142,21 +164,14 @@ export default class Keyboard {
 
     replaceKeycap(filterKey) {
         let replaceKey = this.DEFAULT_KEY;
-
-        if (this.isCapsLock) {
-            replaceKey = this.CAPS_KEY;
-        }
-        if (this.isShift) {
-            replaceKey = this.SHIFT_KEY;
-        }
+        if (this.isCapsLock) replaceKey = this.CAPS_KEY;
+        if (this.isShift) replaceKey = this.SHIFT_KEY;
         this.flatkey
             .filter((keycap) => keycap[this.lang][filterKey])
             .forEach((keycap) => {
-                let replace = keycap[this.lang][replaceKey]
-                    ? keycap[this.lang][replaceKey]
-                    : keycap[this.lang][this.DEFAULT_KEY];
+                let replace = keycap[this.lang][replaceKey] ?? keycap[this.lang][this.DEFAULT_KEY];
                 if (keycap.value) replace = keycap.value;
-                this.container.querySelector(`[data-key=${keycap.key}]`).innerHTML = replace;
+                this.container.querySelector(`[data-key=${keycap.key}]`).textContent = replace;
             });
     }
 
@@ -168,44 +183,8 @@ export default class Keyboard {
                 this.lang = this.langList[this.langList.indexOf(this.lang) + 1];
             }
             this.replaceKeycap('char');
+            localStorage.setItem('lang', this.lang);
         }
-
-        localStorage.setItem('lang', this.lang);
-    }
-
-    addCtrl() {
-        this.isCtrl = true;
-        this.switchLanguage();
-    }
-
-    removeCtrl() {
-        this.isCtrl = false;
-        this.switchLanguage();
-    }
-
-    addAlt() {
-        this.isAlt = true;
-        this.switchLanguage();
-    }
-
-    removeAlt() {
-        this.isAlt = false;
-        this.switchLanguage();
-    }
-
-    shiftKeycapDown() {
-        this.isShift = true;
-        this.replaceKeycap('shiftChar');
-    }
-
-    shiftKeycapUp() {
-        this.isShift = false;
-        this.replaceKeycap('shiftChar');
-    }
-
-    capsLock() {
-        this.isCapsLock = !this.isCapsLock;
-        this.replaceKeycap('capsChar');
     }
 
     highlightKeycap(code) {
@@ -223,10 +202,11 @@ export default class Keyboard {
             .classList.remove('active');
     }
 
-    caretLeft() {
+    moveCaretLeft() {
         const { caret } = this.getSelection();
         if (!this.isFocus()) {
             this.textfield.focus();
+            if (caret === 0) return;
             this.moveSelectionTo(
                 caret - 1,
                 caret - 1,
@@ -240,7 +220,7 @@ export default class Keyboard {
         }
     }
 
-    caretRight() {
+    moveCaretRight() {
         const { caret } = this.getSelection();
         if (!this.isFocus()) {
             this.textfield.focus();
@@ -252,10 +232,41 @@ export default class Keyboard {
         );
     }
 
-    caretDown() {
+    getFieldPos() {
+        const { caret } = this.getSelection();
         const lines = this.textfield.innerHTML.split('\n');
         const isMultiline = lines.length > 1;
-        const { caret } = this.getSelection();
+        // Get lines length corrected to missing \n
+        const linesLengths = lines.map((e) => {
+            if (e === '') return 1;
+            return e.length + 1;
+        });
+        linesLengths[linesLengths.length - 1] = linesLengths[linesLengths.length - 1] - 1;
+        // Get line position of caret
+        let lineIDX = 1;
+        // eslint-disable-next-line
+        for (let i = 1; i <= linesLengths.length; i++) {
+            const sum = linesLengths.slice(0, i).reduce((p, c) => p + c, 0);
+            if (caret - sum < 0) {
+                lineIDX = i;
+                break;
+            }
+        }
+        return {
+            caret,
+            isMultiline,
+            linesLengths,
+            lineIDX,
+        };
+    }
+
+    moveCaretDown() {
+        const {
+            caret,
+            isMultiline,
+            linesLengths,
+            lineIDX,
+        } = this.getFieldPos();
         if (!this.isFocus()) {
             this.textfield.focus();
         } else {
@@ -263,34 +274,22 @@ export default class Keyboard {
             if (caret === this.textfield.innerHTML.length) return;
             // Check if its multiline
             if (isMultiline) {
-                // Get line position of caret
-                const lengths = lines.map((e) => {
-                    if (e === '') return 1;
-                    return e.length + 1;
-                });
-                lengths[lengths.length - 1] = lengths[lengths.length - 1] - 1;
-                let lineIDX = 1;
-                // eslint-disable-next-line
-                for (let i = 1; i <= lengths.length; i++) {
-                    const sum = lengths.slice(0, i).reduce((p, c) => p + c, 0);
-                    if (caret - sum < 0) {
-                        lineIDX = i;
-                        break;
-                    }
-                }
                 // Dont move Caret if at the last line
-                if (lines.length === lineIDX) return;
+                if (linesLengths.length === lineIDX) return;
                 // Move Caret to the next line
-                const nextLinePos = lengths.slice(0, lineIDX).reduce((p, c) => p + c, 0);
+                const nextLinePos = linesLengths.slice(0, lineIDX).reduce((p, c) => p + c, 0);
                 this.moveSelectionTo(nextLinePos, nextLinePos);
             }
         }
     }
 
-    caretUp() {
-        const lines = this.textfield.innerHTML.split('\n');
-        const isMultiline = lines.length > 1;
-        const { caret } = this.getSelection();
+    moveCaretUp() {
+        const {
+            caret,
+            isMultiline,
+            linesLengths,
+            lineIDX,
+        } = this.getFieldPos();
         if (!this.isFocus()) {
             this.textfield.focus();
         } else {
@@ -298,93 +297,70 @@ export default class Keyboard {
             if (caret === 0) return;
             // Check if its multiline
             if (isMultiline) {
-                // Get line position of caret
-                const lengths = lines.map((e) => {
-                    if (e === '') return 1;
-                    return e.length + 1;
-                });
-                lengths[lengths.length - 1] = lengths[lengths.length - 1] - 1;
-                let lineIDX = 1;
-                // eslint-disable-next-line
-                for (let i = 1; i <= lengths.length; i++) {
-                    const sum = lengths.slice(0, i).reduce((p, c) => p + c, 0);
-                    if (caret - sum < 0) {
-                        lineIDX = i;
-                        break;
-                    }
-                }
                 // Move Caret to the previous line
-                const prevLinePos = lengths.slice(0, lineIDX - 2).reduce((p, c) => p + c, 0);
+                const prevLinePos = linesLengths.slice(0, lineIDX - 2).reduce((p, c) => p + c, 0);
                 this.moveSelectionTo(prevLinePos, prevLinePos);
             }
         }
     }
 
-    register() {
-        // Split functions and event listeners
-        document.addEventListener('keydown', (event) => {
-            event.preventDefault();
-            const keyObj = this.findKey(event.code);
+    keyDown(event) {
+        event.preventDefault();
+        const keyObj = this.findKey(event.code);
+        if (!keyObj) return;
+        this.highlightKeycap(event.code);
+
+        if (keyObj.special) {
+            keyObj.keyDown(this, event.code);
+        } else {
+            this.printKey(keyObj);
+        }
+    }
+
+    keyUp(event) {
+        event.preventDefault();
+        const keyObj = this.findKey(event.code);
+        if (!keyObj) return;
+        this.removeHightlight(event.code);
+
+        if (keyObj.special) {
+            if (!keyObj.keyUp) return;
+            keyObj.keyUp(this);
+        }
+    }
+
+    mouseDown(event) {
+        if (event.target !== event.currentTarget) {
+            const keyObj = this.findKey(event.target.dataset.key);
             if (!keyObj) return;
-            this.highlightKeycap(event.code);
+            this.highlightKeycap(event.target.dataset.key);
 
             if (keyObj.special) {
-                keyObj.keyDown(this, event.code);
+                keyObj.keyDown(this);
             } else {
                 this.printKey(keyObj);
             }
-        });
+        }
+    }
 
-        document.addEventListener('keyup', (event) => {
-            event.preventDefault();
-            const keyObj = this.findKey(event.code);
+    mouseOut(event) {
+        if (event.target !== event.currentTarget) {
+            const keyObj = this.findKey(event.target.dataset.key);
             if (!keyObj) return;
-            this.removeHightlight(event.code);
+            this.removeHightlight(event.target.dataset.key);
 
             if (keyObj.special) {
                 if (!keyObj.keyUp) return;
                 keyObj.keyUp(this);
             }
-        });
+        }
+    }
 
-        this.container.addEventListener('mousedown', (event) => {
-            if (event.target !== event.currentTarget) {
-                const keyObj = this.findKey(event.target.dataset.key);
-                if (!keyObj) return;
-                this.highlightKeycap(event.target.dataset.key);
-
-                if (keyObj.special) {
-                    keyObj.keyDown(this);
-                } else {
-                    this.printKey(keyObj);
-                }
-            }
-        });
-
-        this.container.addEventListener('mouseup', (event) => {
-            if (event.target !== event.currentTarget) {
-                const keyObj = this.findKey(event.target.dataset.key);
-                if (!keyObj) return;
-                this.removeHightlight(event.target.dataset.key);
-
-                if (keyObj.special) {
-                    if (!keyObj.keyUp) return;
-                    keyObj.keyUp(this);
-                }
-            }
-        });
-
-        this.container.addEventListener('mouseout', (event) => {
-            if (event.target !== event.currentTarget) {
-                const keyObj = this.findKey(event.target.dataset.key);
-                if (!keyObj) return;
-                this.removeHightlight(event.target.dataset.key);
-
-                if (keyObj.special) {
-                    if (!keyObj.keyUp) return;
-                    keyObj.keyUp(this);
-                }
-            }
-        });
+    registerEvent() {
+        document.addEventListener('keydown', this.keyDown.bind(this));
+        document.addEventListener('keyup', this.keyUp.bind(this));
+        this.container.addEventListener('mousedown', this.mouseDown.bind(this));
+        this.container.addEventListener('mouseup', this.mouseOut.bind(this));
+        this.container.addEventListener('mouseout', this.mouseOut.bind(this));
     }
 }

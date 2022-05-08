@@ -32,5 +32,4 @@ const kb = new Keyboard(keys, {
     container: document.querySelector('[data-name="keyboard"]'),
     textfield: document.querySelector('[data-name="textfield"]'),
 });
-kb.createDom();
-kb.register();
+kb.create();

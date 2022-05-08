@@ -342,7 +342,7 @@ const keys = [
             key: 'CapsLock',
             cssClasses: ['special', 'key--wide'],
             special: true,
-            keyDown: (context) => { context.capsLock(); },
+            keyDown: (context) => { context.handleCapsLock(); },
             value: 'CapsLk',
             rus: {
                 char: '',
@@ -511,8 +511,8 @@ const keys = [
             key: 'ShiftLeft',
             cssClasses: ['special', 'key--wide'],
             special: true,
-            keyDown: (context) => { context.shiftKeycapDown(); },
-            keyUp: (context) => { context.shiftKeycapUp(); },
+            keyDown: (context) => { context.handleShift(true); },
+            keyUp: (context) => { context.handleShift(); },
             rus: {
                 char: 'Shift',
             },
@@ -655,7 +655,7 @@ const keys = [
             cssClasses: ['special'],
             value: '🠕',
             special: true,
-            keyDown: (context) => { context.caretUp(); },
+            keyDown: (context) => { context.moveCaretUp(); },
             rus: {
                 char: '',
             },
@@ -667,8 +667,8 @@ const keys = [
             key: 'ShiftRight',
             cssClasses: ['special', 'key--wide'],
             special: true,
-            keyDown: (context) => { context.shiftKeycapDown(); },
-            keyUp: (context) => { context.shiftKeycapUp(); },
+            keyDown: (context) => { context.handleShift(true); },
+            keyUp: (context) => { context.handleShift(); },
             value: 'Shift',
             rus: {
                 char: 'Shift',
@@ -684,8 +684,8 @@ const keys = [
             cssClasses: ['special', 'key--wide'],
             value: 'Ctrl',
             special: true,
-            keyDown: (context) => { context.addCtrl(); },
-            keyUp: (context) => { context.removeCtrl(); },
+            keyDown: (context) => { context.handleCtrl(true); },
+            keyUp: (context) => { context.handleCtrl(); },
             rus: {
                 char: '',
             },
@@ -709,8 +709,8 @@ const keys = [
             cssClasses: ['special', 'key--wide'],
             value: 'Alt',
             special: true,
-            keyDown: (context) => { context.addAlt(); },
-            keyUp: (context) => { context.removeAlt(); },
+            keyDown: (context) => { context.handleAlt(true); },
+            keyUp: (context) => { context.handleAlt(); },
             rus: {
                 char: '',
             },
@@ -734,8 +734,8 @@ const keys = [
             cssClasses: ['special', 'key--wide'],
             value: 'Alt',
             special: true,
-            keyDown: (context) => { context.addAlt(); },
-            keyUp: (context) => { context.removeAlt(); },
+            keyDown: (context) => { context.handleAlt(true); },
+            keyUp: (context) => { context.handleAlt(); },
             rus: {
                 char: '',
             },
@@ -748,7 +748,7 @@ const keys = [
             cssClasses: ['special'],
             value: '🠔',
             special: true,
-            keyDown: (context) => { context.caretLeft(); },
+            keyDown: (context) => { context.moveCaretLeft(); },
             rus: {
                 char: '',
             },
@@ -761,7 +761,7 @@ const keys = [
             cssClasses: ['special'],
             value: '🠗',
             special: true,
-            keyDown: (context) => { context.caretDown(); },
+            keyDown: (context) => { context.moveCaretDown(); },
             rus: {
                 char: '',
             },
@@ -774,7 +774,7 @@ const keys = [
             cssClasses: ['special'],
             value: '🠖',
             special: true,
-            keyDown: (context) => { context.caretRight(); },
+            keyDown: (context) => { context.moveCaretRight(); },
             rus: {
                 char: '',
             },
@@ -787,8 +787,8 @@ const keys = [
             cssClasses: ['special', 'key--wide'],
             value: 'Ctrl',
             special: true,
-            keyDown: (context) => { context.addCtrl(); },
-            keyUp: (context) => { context.removeCtrl(); },
+            keyDown: (context) => { context.handleCtrl(true); },
+            keyUp: (context) => { context.handleCtrl(); },
             rus: {
                 char: '',
             },
