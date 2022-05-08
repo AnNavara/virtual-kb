@@ -26,7 +26,7 @@ createContent('header', '', ['header'], BODY);
 createContent('h1', 'Virtual Keyboard', [], document.querySelector('header.header'));
 createContent('textarea', '', ['textarea'], BODY, { 'data-name': 'textfield', cols: 50, rows: 5 });
 createContent('div', '', ['keyboard'], BODY, { 'data-name': 'keyboard' });
-createContent('p', 'Ctrl + Alt to change language', [], BODY);
+createContent('p', 'Ctrl + Alt to change language; Created in OS Windows', [], BODY);
 
 const kb = new Keyboard(keys, {
     container: document.querySelector('[data-name="keyboard"]'),
