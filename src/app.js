@@ -162,6 +162,34 @@ export default class Keyboard {
         }
     }
 
+    handleDelete() {
+        const text = this.textfield.innerHTML;
+        if (!this.isFocus()) return;
+        const { caret, caretEnd } = this.getSelection();
+        // Single Caret
+        if (caret === caretEnd) {
+            // Caret at end
+            if (caret === text.length) return;
+            // Caret at the start
+            if (caret === 0) {
+                this.textfield.innerHTML = text.slice(
+                    1,
+                    text.length,
+                );
+            // Caret at middle
+            } else {
+                this.textfield.innerHTML = text.slice(0, caret)
+                + text.slice(caretEnd + 1);
+                this.moveSelectionTo(caret, caret);
+            }
+        // Multiselection
+        } else {
+            this.textfield.innerHTML = text.slice(0, caret)
+            + text.slice(caretEnd);
+            this.moveSelectionTo(caret, caret);
+        }
+    }
+
     replaceKeycap(filterKey) {
         let replaceKey = this.DEFAULT_KEY;
         if (this.isCapsLock) replaceKey = this.CAPS_KEY;

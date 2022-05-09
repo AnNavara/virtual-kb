@@ -326,7 +326,7 @@ const keys = [
         },
         {
             key: 'Backslash',
-            cssClasses: ['special', 'key--wide'],
+            cssClasses: ['special'],
             rus: {
                 char: '\\',
                 shiftChar: '/',
@@ -334,6 +334,21 @@ const keys = [
             eng: {
                 char: '\\',
                 shiftChar: '|',
+            },
+        },
+        {
+            key: 'Delete',
+            cssClasses: ['special'],
+            special: true,
+            value: 'Del',
+            keyDown: (context) => { context.handleDelete(); },
+            rus: {
+                char: 'Del',
+                shiftChar: 'Del',
+            },
+            eng: {
+                char: 'Del',
+                shiftChar: 'Del',
             },
         },
     ],
