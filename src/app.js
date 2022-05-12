@@ -129,42 +129,34 @@ export default class Keyboard {
 
     removeKey() {
         const text = this.textfield.innerHTML;
-        if (!this.isFocus()) {
-            this.textfield.innerHTML = text.slice(
-                0,
-                text.length - 1,
-            );
-        } else {
-            const { caret, caretEnd } = this.getSelection();
-            // Single Caret
-            if (caret === caretEnd) {
-                // Caret at the start
-                if (caret === 0) return;
-                // Caret at end
-                if (caret === text.length) {
-                    this.textfield.innerHTML = text.slice(
-                        0,
-                        text.length - 1,
-                    );
-                    this.moveSelectionTo(caret - 1, caretEnd - 1);
-                // Caret at middle
-                } else {
-                    this.textfield.innerHTML = text.slice(0, caret - 1)
-                    + text.slice(caretEnd);
-                    this.moveSelectionTo(caret - 1, caret - 1);
-                }
-            // Multiselection
+        const { caret, caretEnd } = this.getSelection();
+        if (caret === caretEnd) {
+            // Caret at the start
+            if (caret === 0) return;
+            // Caret at end
+            if (caret === text.length) {
+                this.textfield.innerHTML = text.slice(
+                    0,
+                    text.length - 1,
+                );
+                this.moveSelectionTo(caret - 1, caretEnd - 1);
+            // Caret at middle
             } else {
-                this.textfield.innerHTML = text.slice(0, caret)
+                this.textfield.innerHTML = text.slice(0, caret - 1)
                 + text.slice(caretEnd);
-                this.moveSelectionTo(caret, caret);
+                this.moveSelectionTo(caret - 1, caret - 1);
             }
+        // Multiselection
+        } else {
+            this.textfield.innerHTML = text.slice(0, caret)
+            + text.slice(caretEnd);
+            this.moveSelectionTo(caret, caret);
         }
     }
 
     handleDelete() {
         const text = this.textfield.innerHTML;
-        if (!this.isFocus()) return;
+        // if (!this.isFocus()) return;
         const { caret, caretEnd } = this.getSelection();
         // Single Caret
         if (caret === caretEnd) {
@@ -232,27 +224,17 @@ export default class Keyboard {
 
     moveCaretLeft() {
         const { caret } = this.getSelection();
-        if (!this.isFocus()) {
-            this.textfield.focus();
-            if (caret === 0) return;
-            this.moveSelectionTo(
-                caret - 1,
-                caret - 1,
-            );
-        } else {
-            if (caret === 0) return;
-            this.moveSelectionTo(
-                caret - 1,
-                caret - 1,
-            );
-        }
+        this.textfield.focus();
+        if (caret === 0) return;
+        this.moveSelectionTo(
+            caret - 1,
+            caret - 1,
+        );
     }
 
     moveCaretRight() {
         const { caret } = this.getSelection();
-        if (!this.isFocus()) {
-            this.textfield.focus();
-        }
+        this.textfield.focus();
         if (caret === this.textfield.innerHTML.length) return;
         this.moveSelectionTo(
             caret + 1,
@@ -265,9 +247,9 @@ export default class Keyboard {
         const lines = this.textfield.innerHTML.split('\n');
         const isMultiline = lines.length > 1;
         // Get lines length corrected to missing \n
-        const linesLengths = lines.map((e) => {
-            if (e === '') return 1;
-            return e.length + 1;
+        const linesLengths = lines.map((line) => {
+            if (line === '') return 1;
+            return line.length + 1;
         });
         linesLengths[linesLengths.length - 1] = linesLengths[linesLengths.length - 1] - 1;
         // Get line position of caret
@@ -295,19 +277,16 @@ export default class Keyboard {
             linesLengths,
             lineIDX,
         } = this.getFieldPos();
-        if (!this.isFocus()) {
-            this.textfield.focus();
-        } else {
-            // Check if caret at the end of textfield
-            if (caret === this.textfield.innerHTML.length) return;
-            // Check if its multiline
-            if (isMultiline) {
-                // Dont move Caret if at the last line
-                if (linesLengths.length === lineIDX) return;
-                // Move Caret to the next line
-                const nextLinePos = linesLengths.slice(0, lineIDX).reduce((p, c) => p + c, 0);
-                this.moveSelectionTo(nextLinePos, nextLinePos);
-            }
+        this.textfield.focus();
+        // Check if caret at the end of textfield
+        if (caret === this.textfield.innerHTML.length) return;
+        // Check if its multiline
+        if (isMultiline) {
+            // Dont move Caret if at the last line
+            if (linesLengths.length === lineIDX) return;
+            // Move Caret to the next line
+            const nextLinePos = linesLengths.slice(0, lineIDX).reduce((p, c) => p + c, 0);
+            this.moveSelectionTo(nextLinePos, nextLinePos);
         }
     }
 
@@ -318,37 +297,34 @@ export default class Keyboard {
             linesLengths,
             lineIDX,
         } = this.getFieldPos();
-        if (!this.isFocus()) {
-            this.textfield.focus();
-        } else {
-            // Check if caret at the start of textfield
-            if (caret === 0) return;
-            // Check if its multiline
-            if (isMultiline) {
-                // Move Caret to the previous line
-                const prevLinePos = linesLengths.slice(0, lineIDX - 2).reduce((p, c) => p + c, 0);
-                this.moveSelectionTo(prevLinePos, prevLinePos);
-            }
+        this.textfield.focus();
+        // Check if caret at the start of textfield
+        if (caret === 0) return;
+        // Check if its multiline
+        if (isMultiline) {
+            // Move Caret to the previous line
+            const prevLinePos = linesLengths.slice(0, lineIDX - 2).reduce((p, c) => p + c, 0);
+            this.moveSelectionTo(prevLinePos, prevLinePos);
         }
     }
 
     keyDown(event) {
-        event.preventDefault();
         const keyObj = this.findKey(event.code);
         if (!keyObj) return;
+        event.preventDefault();
         this.highlightKeycap(event.code);
 
         if (keyObj.special) {
-            keyObj.keyDown(this, event.code);
+            keyObj.keyDown(this);
         } else {
             this.printKey(keyObj);
         }
     }
 
     keyUp(event) {
-        event.preventDefault();
         const keyObj = this.findKey(event.code);
         if (!keyObj) return;
+        event.preventDefault();
         this.removeHightlight(event.code);
 
         if (keyObj.special) {
@@ -361,8 +337,8 @@ export default class Keyboard {
         if (event.target !== event.currentTarget) {
             const keyObj = this.findKey(event.target.dataset.key);
             if (!keyObj) return;
+            event.preventDefault();
             this.highlightKeycap(event.target.dataset.key);
-
             if (keyObj.special) {
                 keyObj.keyDown(this);
             } else {
@@ -375,8 +351,8 @@ export default class Keyboard {
         if (event.target !== event.currentTarget) {
             const keyObj = this.findKey(event.target.dataset.key);
             if (!keyObj) return;
+            event.preventDefault();
             this.removeHightlight(event.target.dataset.key);
-
             if (keyObj.special) {
                 if (!keyObj.keyUp) return;
                 keyObj.keyUp(this);
